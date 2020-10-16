@@ -20,6 +20,16 @@ class CommentsController < ApplicationController
     @comment = @article.comments.find(params[:id])
   end
 
+  def update
+    @article = current_user.articles.find(params[:id])
+
+    if @comment.update(article_params)
+      redirect_to @article
+    else
+      render 'edit'
+    end
+  end
+
   private
   def comment_params
     params.require(:comment).permit(:commenter, :body)
